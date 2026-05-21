@@ -18,3 +18,11 @@ def test_healthz_endpoint():
 
     assert response.status_code == 200
     assert response.json() == {"status": "healthy"}
+
+def test_version_endpoint():
+    response = client.get("/version")
+    data = response.json()
+
+    assert response.status_code == 200
+    assert "version" in data
+    assert "commit" in data   
