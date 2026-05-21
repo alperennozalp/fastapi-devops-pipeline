@@ -11,3 +11,6 @@ __pycache__/
 # Editor and OS files
 .vscode/
 .DS_Store
+
+# Pytest cache
+.pytest_cache/
