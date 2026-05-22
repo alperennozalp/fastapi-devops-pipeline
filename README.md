@@ -29,3 +29,44 @@ The next steps will focus on containerization with Docker, Kubernetes deployment
 - FastAPI TestClient: Used to test the endpoints without manually starting the server.
 - httpx: Required by the test client for HTTP-style requests during testing.
 
+## Project Structure
+
+```text
+fastapi-devops-pipeline/
+├── app/
+│   ├── __init__.py
+│   └── main.py
+├── tests/
+│   └── test_endpoints.py
+├── .gitignore
+├── pytest.ini
+├── README.md
+└── requirements.txt
+```
+
+### Folder and file explanations
+app/: Contains the application source code.
+app/main.py: Defines the FastAPI application and API endpoints.
+app/__init__.py: Makes the app folder importable in Python.
+tests/: Contains automated tests.
+tests/test_endpoints.py: Contains tests for /ping, /healthz, and /version.
+requirements.txt: Lists the Python packages needed for the project.
+pytest.ini: Configures pytest to find the application code during tests.
+.gitignore: Defines files and folders that Git should ignore.
+README.md: Documents the project and how to use it.
+
+## API Endpoints
+
+The service currently has three simple GET endpoints.
+
+- GET /ping  
+  Used to check if the application is responding.  
+  Example response: {"message": "pong"}
+
+- GET /healthz  
+  Used as a basic health check endpoint.
+  Example response: {"status": "healthy"}
+
+- GET /version  
+  Returns version and commit information. For now, it returns default local values. Later, these values can be provided through environment variables in the deployment or CI/CD process.  
+  Example response: {"version": "dev", "commit": "local"}
