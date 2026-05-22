@@ -70,3 +70,47 @@ The service currently has three simple GET endpoints.
 - GET /version  
   Returns version and commit information. For now, it returns default local values. Later, these values can be provided through environment variables in the deployment or CI/CD process.  
   Example response: {"version": "dev", "commit": "local"}
+
+  ## Local Setup
+
+This project uses a virtual environment.
+
+Create it:
+
+`py -m venv .venv`
+
+Activate it on Windows PowerShell:
+
+`.\.venv\Scripts\Activate.ps1`
+
+Install the packages:
+
+`pip install -r requirements.txt`
+
+If the terminal starts with `(.venv)`, the virtual environment is active.
+
+## Running the Application
+
+Start the app:
+
+`uvicorn app.main:app --reload`
+
+Open these URLs in the browser:
+
+`http://127.0.0.1:8000/ping`
+
+`http://127.0.0.1:8000/healthz`
+
+`http://127.0.0.1:8000/version`
+
+Stop the app with `Ctrl + C`.
+
+## Running Tests
+
+Run the tests:
+
+`pytest`
+
+Current expected result:
+
+`3 passed`
