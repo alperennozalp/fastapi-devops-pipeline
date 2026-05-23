@@ -115,3 +115,28 @@ Current expected result:
 
 `3 passed`
 
+## Docker
+
+Build the Docker image:
+
+`docker build -t fastapi-devops-pipeline .`
+
+Run the container:
+
+`docker run -d --name fastapi-devops-app -p 8000:8000 fastapi-devops-pipeline`
+
+Check running containers:
+
+`docker ps`
+
+View container logs:
+
+`docker logs fastapi-devops-app`
+
+Stop the container:
+
+`docker stop fastapi-devops-app`
+
+Remove the stopped container:
+
+`docker rm fastapi-devops-app`
