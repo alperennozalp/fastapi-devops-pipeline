@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fastapi-devops-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fastapi-devops-app
+  template:
+    metadata:
+      labels:
+        app: fastapi-devops-app
+    spec:
+      containers:
+        - name: fastapi-devops-app
+          image: fastapi-devops-pipeline:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8000
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8000
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 8000
+            initialDelaySeconds: 5
+            periodSeconds: 5
