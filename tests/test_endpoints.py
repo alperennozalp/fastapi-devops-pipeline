@@ -26,3 +26,10 @@ def test_version_endpoint():
     assert response.status_code == 200
     assert "version" in data
     assert "commit" in data   
+    
+def test_metrics_endpoint():
+    response = client.get("/metrics")
+
+    assert response.status_code == 200
+    assert "app_requests_total" in response.text
+    
