@@ -262,3 +262,35 @@ After changing the Helm values, the application can be updated with:
 `helm upgrade fastapi-devops ./helm/fastapi-devops-pipeline`
 
 I tested the updated deployment on Minikube and verified that the `/ping`, `/healthz`, and `/version` endpoints worked successfully.
+
+## Monitoring
+
+The application exposes a basic Prometheus-compatible metrics endpoint.
+
+Metrics endpoint:
+
+`/metrics`
+
+The project uses the `prometheus-client` package to generate metrics in Prometheus format.
+
+The application currently tracks total handled requests with the following metric:
+
+`app_requests_total`
+
+The `/metrics` endpoint was tested locally with pytest and also verified through the Kubernetes service on Minikube.
+
+After the latest image was pushed to GitHub Container Registry, the Helm chart was upgraded and the application was tested through:
+
+`/ping`
+
+`/healthz`
+
+`/version`
+
+`/metrics`
+
+Since the Helm chart uses the GHCR image with the `latest` tag, the image pull policy is set to:
+
+`Always`
+
+This ensures that Kubernetes pulls the latest image from GitHub Container Registry when a new Pod is created.
