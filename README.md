@@ -30,21 +30,54 @@ This project includes:
 
 ## Tech Stack
 
-### Implemented so far
-
-- Python: Used as the main programming language for the small HTTP service.
-- FastAPI: Used to create the API endpoints.
-- Uvicorn: Used to run the FastAPI application locally.
-- pytest: Used to run automated tests.
-- FastAPI TestClient: Used to test the endpoints without manually starting the server.
-- httpx: Required by the test client for HTTP-style requests during testing.
+- Python: Main programming language used for the FastAPI application.
+- FastAPI: Used to create API endpoints such as `/ping`, `/healthz`, `/version`, and `/metrics`.
+- Uvicorn: Used as the ASGI server for running the FastAPI application.
+- pytest: Used for automated endpoint testing.
+- FastAPI TestClient: Used to test API endpoints without manually starting the server.
+- httpx: Used by the test client for HTTP-style requests during testing.
+- prometheus-client: Used to expose application metrics in Prometheus format.
+- Docker: Used to containerize the FastAPI application.
+- Kubernetes: Used to run the application with Deployment and Service resources.
+- Minikube: Used as the local Kubernetes environment.
+- Helm: Used to package and manage Kubernetes manifests.
+- GitHub Actions: Used for CI/CD automation.
+- Trivy: Used for container image security scanning.
+- GitHub Container Registry: Used to store and publish the Docker image.
 
 ## Project Structure
 
 ```text
 fastapi-devops-pipeline/
 ├── app/
+│   ├── __init__.py## Project Structure
+
+```text
+fastapi-devops-pipeline/
+├── .github/
+│   └── workflows/
+│       └── ci.yml
+├── app/
 │   ├── __init__.py
+│   └── main.py
+├── helm/
+│   └── fastapi-devops-pipeline/
+│       ├── Chart.yaml
+│       ├── values.yaml
+│       └── templates/
+│           ├── deployment.yaml
+│           └── service.yaml
+├── k8s/
+│   ├── deployment.yaml
+│   └── service.yaml
+├── tests/
+│   └── test_endpoints.py
+├── .dockerignore
+├── .gitignore
+├── Dockerfile
+├── pytest.ini
+├── README.md
+└── requirements.txt
 │   └── main.py
 ├── tests/
 │   └── test_endpoints.py
@@ -55,37 +88,73 @@ fastapi-devops-pipeline/
 ```
 
 ### Folder and file explanations
-app/: Contains the application source code.
-app/main.py: Defines the FastAPI application and API endpoints.
-app/__init__.py: Makes the app folder importable in Python.
-tests/: Contains automated tests.
-tests/test_endpoints.py: Contains tests for /ping, /healthz, and /version.
-requirements.txt: Lists the Python packages needed for the project.
-pytest.ini: Configures pytest to find the application code during tests.
-.gitignore: Defines files and folders that Git should ignore.
-README.md: Documents the project and how to use it.
+
+`app/`: Contains the FastAPI application code.
+
+`app/main.py`: Main application file. The API endpoints such as `/ping`, `/healthz`, `/version`, and `/metrics` are defined here.
+
+`app/__init__.py`: Makes the `app` folder usable as a Python package.
+
+`tests/`: Contains the test files.
+
+`tests/test_endpoints.py`: Contains endpoint tests for `/ping`, `/healthz`, `/version`, and `/metrics`.
+
+`.github/workflows/ci.yml`: GitHub Actions workflow file. It runs the tests, builds the Docker image, scans the image with Trivy, and pushes the image to GitHub Container Registry.
+
+`Dockerfile`: Used to build the Docker image of the FastAPI application.
+
+`.dockerignore`: Used to keep unnecessary files out of the Docker build context.
+
+`k8s/`: Contains the basic Kubernetes manifest files.
+
+`k8s/deployment.yaml`: Defines how the application runs as a Kubernetes Deployment.
+
+`k8s/service.yaml`: Defines how the application is exposed through a Kubernetes Service.
+
+`helm/`: Contains the Helm chart version of the Kubernetes setup.
+
+`helm/fastapi-devops-pipeline/Chart.yaml`: Contains basic information about the Helm chart.
+
+`helm/fastapi-devops-pipeline/values.yaml`: Contains values such as the image name, tag, pull policy, service type, ports, and health check settings.
+
+`helm/fastapi-devops-pipeline/templates/deployment.yaml`: Helm template for the Deployment.
+
+`helm/fastapi-devops-pipeline/templates/service.yaml`: Helm template for the Service.
+
+`requirements.txt`: Lists the Python packages used in the project.
+
+`pytest.ini`: Contains pytest configuration for running the tests correctly.
+
+`.gitignore`: Lists files and folders that should not be added to Git.
+
+`README.md`: Explains the project structure, setup steps, Docker usage, Kubernetes usage, Helm usage, CI/CD workflow, and monitoring endpoint.
 
 ## API Endpoints
 
-The service currently has three simple GET endpoints.
+The application has four GET endpoints.
 
-- GET /ping  
+- `GET /ping`  
   Used to check if the application is responding.  
-  Example response: {"message": "pong"}
+  Example response: `{"message": "pong"}`
 
-- GET /healthz  
-  Used as a basic health check endpoint.
-  Example response: {"status": "healthy"}
+- `GET /healthz`  
+  Used as a basic health check endpoint. This endpoint is also used by the Kubernetes liveness and readiness probes.  
+  Example response: `{"status": "healthy"}`
 
-- GET /version  
-  Returns version and commit information. For now, it returns default local values. Later, these values can be provided through environment variables in the deployment or CI/CD process.  
-  Example response: {"version": "dev", "commit": "local"}
+- `GET /version`  
+  Returns version and commit information. If environment variables are not provided, it returns default local values.  
+  Example response: `{"version": "dev", "commit": "local"}`
+
+- `GET /metrics`  
+  Exposes basic application metrics in Prometheus format.  
+  This endpoint includes the `app_requests_total` metric, which counts handled requests.  
+  Example output includes: `app_requests_total`
 
   ## Local Setup
 
-This project uses a virtual environment.
+This project uses a Python virtual environment.
 
-Create it:
+Create the virtual environment:
 
 `py -m venv .venv`
 
@@ -93,7 +162,7 @@ Activate it on Windows PowerShell:
 
 `.\.venv\Scripts\Activate.ps1`
 
-Install the packages:
+Install the required packages:
 
 `pip install -r requirements.txt`
 
@@ -101,11 +170,11 @@ If the terminal starts with `(.venv)`, the virtual environment is active.
 
 ## Running the Application
 
-Start the app:
+Start the application locally:
 
 `uvicorn app.main:app --reload`
 
-Open these URLs in the browser:
+Then open these URLs in the browser:
 
 `http://127.0.0.1:8000/ping`
 
@@ -113,17 +182,21 @@ Open these URLs in the browser:
 
 `http://127.0.0.1:8000/version`
 
-Stop the app with `Ctrl + C`.
+`http://127.0.0.1:8000/metrics`
+
+Stop the application with:
+
+`Ctrl + C`
 
 ## Running Tests
 
-Run the tests:
+Run the tests with:
 
 `pytest`
 
 Current expected result:
 
-`3 passed`
+`4 passed`
 
 ## Docker
 
