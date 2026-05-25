@@ -140,3 +140,55 @@ Stop the container:
 Remove the stopped container:
 
 `docker rm fastapi-devops-app`
+
+## Kubernetes with Minikube
+
+This project can also run on a local Kubernetes cluster with Minikube.
+
+Start Minikube:
+
+`minikube start --driver=docker`
+
+Load the local Docker image into Minikube:
+
+`minikube image load fastapi-devops-pipeline:latest`
+
+Apply the Kubernetes Deployment:
+
+`kubectl apply -f k8s/deployment.yaml`
+
+Apply the Kubernetes Service:
+
+`kubectl apply -f k8s/service.yaml`
+
+Check the created resources:
+
+`kubectl get deployments`
+
+`kubectl get pods`
+
+`kubectl get services`
+
+Get the service URL:
+
+`minikube service fastapi-devops-service --url`
+
+Then open the returned URL in the browser with these paths:
+
+`/ping`
+
+`/healthz`
+
+`/version`
+
+Some useful troubleshooting commands:
+
+`kubectl describe pod <pod-name>`
+
+`kubectl logs <pod-name>`
+
+`kubectl describe service fastapi-devops-service`
+
+`kubectl get pods --show-labels`
+
+`kubectl get endpointslices -l kubernetes.io/service-name=fastapi-devops-service`
