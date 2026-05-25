@@ -230,3 +230,35 @@ If I change something in `values.yaml`, I can apply the change with:
 `helm upgrade fastapi-devops ./helm/fastapi-devops-pipeline`
 
 For now, `values.yaml` includes basic settings such as replica count, image information, service type, ports, and the health check path.
+
+## CI/CD and GitHub Container Registry
+
+This project uses GitHub Actions for the CI/CD workflow.
+
+The workflow is defined in:
+
+`.github/workflows/ci.yml`
+
+Current pipeline steps:
+
+- Check out the repository
+- Set up Python 3.12
+- Install Python dependencies
+- Run tests with pytest
+- Build the Docker image
+- Scan the Docker image with Trivy
+- Push the Docker image to GitHub Container Registry
+
+The Docker image is published to GitHub Container Registry:
+
+`ghcr.io/alperennozalp/fastapi-devops-pipeline:latest`
+
+The Helm chart is also configured to use this image from GHCR:
+
+`ghcr.io/alperennozalp/fastapi-devops-pipeline`
+
+After changing the Helm values, the application can be updated with:
+
+`helm upgrade fastapi-devops ./helm/fastapi-devops-pipeline`
+
+I tested the updated deployment on Minikube and verified that the `/ping`, `/healthz`, and `/version` endpoints worked successfully.
