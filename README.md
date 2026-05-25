@@ -364,9 +364,9 @@ After changing the Helm values, the application can be updated with:
 
 I tested the updated deployment on Minikube and verified that the `/ping`, `/healthz`, and `/version` endpoints worked successfully.
 
-## Monitoring
+## Monitoring and Observability
 
-The application exposes a basic Prometheus-compatible metrics endpoint.
+This project includes a basic monitoring and observability setup by exposing application metrics in Prometheus format.
 
 Metrics endpoint:
 
