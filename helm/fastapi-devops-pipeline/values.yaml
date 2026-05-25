@@ -3,7 +3,7 @@ replicaCount: 1
 image:
   repository: ghcr.io/alperennozalp/fastapi-devops-pipeline
   tag: latest
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
 
 service:
   type: NodePort
