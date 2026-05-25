@@ -326,6 +326,12 @@ If I change something in `values.yaml`, I can apply the change with:
 
 For now, `values.yaml` includes basic settings such as replica count, image information, service type, ports, and the health check path.
 
+The Helm chart now uses the Docker image published to GitHub Container Registry:
+
+`ghcr.io/alperennozalp/fastapi-devops-pipeline:latest`
+
+In `values.yaml`, the image pull policy is set to `Always` so that Kubernetes pulls the latest image when a new Pod is created.
+
 ## CI/CD and GitHub Container Registry
 
 This project uses GitHub Actions for the CI/CD workflow.
