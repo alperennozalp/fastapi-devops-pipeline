@@ -1,9 +1,9 @@
 replicaCount: 1
 
 image:
-  repository: fastapi-devops-pipeline
+  repository: ghcr.io/alperennozalp/fastapi-devops-pipeline
   tag: latest
-  pullPolicy: Never
+  pullPolicy: IfNotPresent
 
 service:
   type: NodePort
