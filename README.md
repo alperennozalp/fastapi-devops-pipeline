@@ -192,3 +192,33 @@ Some useful troubleshooting commands:
 `kubectl get pods --show-labels`
 
 `kubectl get endpointslices -l kubernetes.io/service-name=fastapi-devops-service`
+
+## Helm
+
+I also added a simple Helm chart for this project.
+
+The chart is located here:
+
+`helm/fastapi-devops-pipeline`
+
+Before installing it, I can check the chart with:
+
+`helm lint ./helm/fastapi-devops-pipeline`
+
+I can also see what Kubernetes YAML files Helm will generate:
+
+`helm template fastapi-devops ./helm/fastapi-devops-pipeline`
+
+Install the chart:
+
+`helm install fastapi-devops ./helm/fastapi-devops-pipeline`
+
+Check the installed release:
+
+`helm list`
+
+If I change something in `values.yaml`, I can apply the change with:
+
+`helm upgrade fastapi-devops ./helm/fastapi-devops-pipeline`
+
+For now, `values.yaml` includes basic settings such as replica count, image information, service type, ports, and the health check path.
