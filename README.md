@@ -1,5 +1,7 @@
 # FastAPI DevOps Pipeline
 
+[![CI](https://github.com/alperennozalp/fastapi-devops-pipeline/actions/workflows/ci.yml/badge.svg)](https://github.com/alperennozalp/fastapi-devops-pipeline/actions/workflows/ci.yml)
+
 ## Project Overview
 
 This repository demonstrates a DevOps pipeline for a FastAPI application.
