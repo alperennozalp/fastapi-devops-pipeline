@@ -200,13 +200,25 @@ Current expected result:
 
 ## Docker
 
-Build the Docker image:
+The application can be built and run as a Docker container.
+
+Build the Docker image locally:
 
 `docker build -t fastapi-devops-pipeline .`
 
 Run the container:
 
 `docker run -d --name fastapi-devops-app -p 8000:8000 fastapi-devops-pipeline`
+
+Then test the endpoints in the browser:
+
+`http://127.0.0.1:8000/ping`
+
+`http://127.0.0.1:8000/healthz`
+
+`http://127.0.0.1:8000/version`
+
+`http://127.0.0.1:8000/metrics`
 
 Check running containers:
 
@@ -223,6 +235,10 @@ Stop the container:
 Remove the stopped container:
 
 `docker rm fastapi-devops-app`
+
+In the CI/CD workflow, the Docker image is also built automatically and pushed to GitHub Container Registry:
+
+`ghcr.io/alperennozalp/fastapi-devops-pipeline:latest`
 
 ## Kubernetes with Minikube
 
@@ -264,6 +280,8 @@ Then open the returned URL in the browser with these paths:
 
 `/version`
 
+`/metrics`
+
 Some useful troubleshooting commands:
 
 `kubectl describe pod <pod-name>`
@@ -275,6 +293,8 @@ Some useful troubleshooting commands:
 `kubectl get pods --show-labels`
 
 `kubectl get endpointslices -l kubernetes.io/service-name=fastapi-devops-service`
+
+Note: The first Kubernetes test used the local Docker image loaded into Minikube. Later, the Helm deployment was updated to use the image published on GitHub Container Registry.
 
 ## Helm
 
