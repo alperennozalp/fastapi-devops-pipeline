@@ -1,0 +1,22 @@
+replicaCount: 1
+
+image:
+  repository: fastapi-devops-pipeline
+  tag: latest
+  pullPolicy: Never
+
+service:
+  type: NodePort
+  port: 8000
+  targetPort: 8000
+  nodePort: 30080
+
+container:
+  port: 8000
+
+probes:
+  path: /healthz
+  livenessInitialDelaySeconds: 10
+  livenessPeriodSeconds: 10
+  readinessInitialDelaySeconds: 5
+  readinessPeriodSeconds: 5
