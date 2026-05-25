@@ -2,21 +2,29 @@
 
 ## Project Overview
 
-This repository contains a small HTTP service built.
+This repository demonstrates a DevOps pipeline for a FastAPI application.
 
-The goal of the project is not to build a complex application, but to create a simple service that can later be containerized, tested, deployed, monitored, and documented as part of a DevOps workflow.
+The project focuses on building, testing, containerizing, scanning, monitoring, and deploying a Python-based HTTP API by using common DevOps tools and practices. It includes automated tests, Docker-based containerization, Kubernetes deployment manifests, a Helm chart, GitHub Actions CI/CD workflow, container image security scanning, and basic monitoring support.
 
-## Current Scope
+The main goal is to show how a backend service can be prepared and managed through a DevOps workflow, starting from local development and continuing through containerization, Kubernetes deployment, Helm-based installation, automated CI/CD, security checks, and observability.
 
-The current version includes the initial application foundation:
+## Project Scope
 
-- A small FastAPI application
-- Three HTTP endpoints: /ping, /healthz, and /version
-- Basic automated endpoint tests with pytest
-- A project-specific Python virtual environment setup
-- Initial Git repository structure with a feature branch workflow
+This project includes:
 
-The next steps will focus on containerization with Docker, Kubernetes deployment with Helm, CI/CD automation, and observability.
+- A FastAPI application with health, version, and ping endpoints
+- Automated endpoint tests with pytest
+- Dockerfile and .dockerignore configuration
+- Docker image build and container run workflow
+- Kubernetes Deployment and Service manifests
+- Minikube-based local Kubernetes deployment
+- Helm chart for installing and upgrading the application
+- GitHub Actions CI/CD workflow
+- Automated test execution in CI
+- Docker image build steps in CI/CD
+- Container image security scanning
+- Basic monitoring or observability setup
+- README documentation for local, Docker, Kubernetes, Helm, and CI/CD usage
 
 ## Tech Stack
 
