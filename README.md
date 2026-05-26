@@ -49,21 +49,22 @@ This project includes:
 
 ```text
 fastapi-devops-pipeline/
-├── app/
-│   ├── __init__.py## Project Structure
-
-```text
-fastapi-devops-pipeline/
 ├── .github/
 │   └── workflows/
 │       └── ci.yml
 ├── app/
 │   ├── __init__.py
 │   └── main.py
+├── docs/
+│   ├── architecture.md
+│   ├── decisions.md
+│   └── screenshots/
 ├── helm/
 │   └── fastapi-devops-pipeline/
 │       ├── Chart.yaml
 │       ├── values.yaml
+│       ├── values-dev.yaml
+│       ├── values-prod.yaml
 │       └── templates/
 │           ├── deployment.yaml
 │           └── service.yaml
@@ -77,14 +78,9 @@ fastapi-devops-pipeline/
 ├── Dockerfile
 ├── pytest.ini
 ├── README.md
-└── requirements.txt
-│   └── main.py
-├── tests/
-│   └── test_endpoints.py
-├── .gitignore
-├── pytest.ini
-├── README.md
-└── requirements.txt
+├── requirements.txt
+├── RUNBOOK.md
+└── SECURITY.md
 ```
 
 ### Folder and file explanations
